@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Create a new resume</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mohave&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mohave&family=Roboto+Mono&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0 auto;
+        }
+
+        body {
+            font-family: "Roboto Mono";
+        }
+
+        #navbar {
+            overflow: hidden;
+            background-color: whitesmoke;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            margin: auto 2rem;
+            width: 1380px;
+            display: flex;
+            transition: 0.4s;
+        }
+
+        .about-me {
+            width: 1280px;
+            margin: 3rem auto;
+            display: flex;
+            flex: 1;
+        }
+
+        .about-me ul {
+            list-style: none;
+        }
+
+        li.img {
+            float: left;
+            justify-content: center;
+        }
+
+        li.info {
+            padding-top: 4rem;
+            float: right;
+            padding-left: 4rem;
+        }
+
+        .skills {
+            width: 1280px;
+        }
+
+        .bar {
+            background-color: lightslategray;
+            border-radius: 5px;
+            padding: 10px 10px;
+        }
+
+        .contact {
+            margin-top: 2rem;
+            width: 1280px;
+            list-style: none;
+        }
+
+        tr {
+            height: 50px;
+        }
+
+        .sticky {
+            background-color: whitesmoke;
+            opacity: 0.8;
+            transition: 0.4s;
+            position: fixed;
+            top: 0;
+        }
+
+        .content {
+            padding: 16px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            // Add smooth scrolling to all links
+            $("a").on('click', function (event) {
+
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 800, function () {
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+        });
+
+        window.onscroll = function () { myFunction() };
+
+        function myFunction() {
+            if (window.pageYOffset > 0) {
+                navbar.classList.add("sticky");
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-dark text-white">
+    <div class="top" id='top' style='display:none;'></div>
+    <div class="navbar" id="navbar">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#top">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#skills">Skills</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#contact-me">Contact Me</a>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="about-me content" id='about-me'>
+        <ul>
+            <li class="img">
+                <img src="{{url_for('static', filename='my_picture.jpg')}}" alt="Your picture" height="500px"
+                    style="border: whitesmoke 2px dashed;">
+            </li>
+            <li class="info">
+                <table>
+                    <tr>
+                        <th class='text-end'>Name:</th>
+                        <td>Thiarasak Khamyan</td>
+                    </tr>
+                    <tr>
+                        <th class='text-end'>Nickname:</th>
+                        <td>Name</td>
+                    </tr>
+                    <tr>
+                        <th class="text-end">Date of birth:</th>
+                        <td>27 October 2001</td>
+                    </tr>
+                    <tr>
+                        <th class="text-end">Address:</th>
+                        <td>124 No.7 Rim Sub-district</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Thawangpha District, Nan, 55140</td>
+                    </tr>
+                    <tr>
+                        <th class="text-end">Education:</th>
+                        <td>2013 - 2020 Thawangpha Pittayakhom School</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>2020 - Now King Mongkut's University of Technology North Bangkok</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="skills content" id='skills'>
+        <h2>Skills</h2> <br>
+        <div class="bar">
+            C++
+            <div class="progress" style='height: 20px'>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">50%</div>
+            </div>
+            C
+            <div class="progress" style='height: 20px'>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">50%</div>
+            </div>
+            Javascript
+            <div class="progress" style='height: 20px'>
+                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                    aria-valuemax="100">25%</div>
+            </div>
+            Python
+            <div class="progress" style='height: 20px'>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">50%</div>
+            </div>
+            PHP
+            <div class="progress" style='height: 20px'>
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">50%</div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="contact" id="contact-me">
+            <h3>Contact</h3>
+            <ul class='contact'>
+                <li class="float-start">
+                    <i class="bi bi-phone"> <a href="tel:093-158-9770"> (+66)-93-1589770</a></i><br>
+                    <i class="bi bi-envelope"> <a
+                            href="mailto:tallersation.ts@gmail.com">tallersation.ts@gmail.com</a></i>
+                </li>
+                <li class="float-end">
+                    <p>Developed By Thiarasak Khamyan</p>
+                </li>
+            </ul>
+        </div>
+</body>
+
+</html>
