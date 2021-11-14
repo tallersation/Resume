@@ -21,8 +21,17 @@
             margin: 0 auto;
         }
 
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         body {
             font-family: "Roboto Mono";
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         #navbar {
@@ -31,8 +40,7 @@
             justify-content: center;
             align-items: center;
             align-content: center;
-            margin: auto 2rem;
-            width: 1380px;
+            width: 100%;
             display: flex;
             transition: 0.4s;
         }
@@ -111,6 +119,8 @@
 
         .donate-me {
             text-align: center;
+            border-top: whitesmoke 1px solid;
+            margin: 2rem auto;
         }
 
         .donate-me>p {
@@ -206,7 +216,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td>2020 - Now King Mongkut's University of Technology North Bangkok</td>
+                        <td>2020 - <b>Now</b> King Mongkut's University of Technology North Bangkok</td>
                     </tr>
                     <tr>
                         <th class="text-end">Hobbies:</th>
@@ -292,7 +302,7 @@
             <div class="donate-me">
                 <ul>
                     <li>
-                        <p>Donate Me</p>
+                        <p style='margin-top: 2rem;'>Donate Me</p>
                         <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
                         <script
                             type='text/javascript'>kofiwidget2.init('Support Me on Ko-fi', '#bb28e0', 'I2I653FKW'); kofiwidget2.draw();</script>
