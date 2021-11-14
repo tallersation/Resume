@@ -13,6 +13,11 @@
         @import url('https://fonts.googleapis.com/css2?family=Mohave&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Mohave&family=Roboto+Mono&display=swap');
 
+        :root {
+            --width: 1280px;
+            --summary-width: 1130px;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -46,7 +51,7 @@
         }
 
         .about-me {
-            width: 1280px;
+            width: var(--width);
             margin: 3rem auto;
             display: flex;
             flex: 1;
@@ -68,20 +73,20 @@
         }
 
         .summary {
-            width: 1280px;
+            width: var(--width);
             margin: 2rem auto;
         }
 
         .summary>p {
-            width: 1130px;
+            width: var(--summary-width);
         }
 
         .skills {
-            width: 1280px;
+            width: var(--width);
         }
 
         .lang-skills {
-            width: 1280px;
+            width: var(--width);
             margin-top: 2rem;
         }
 
@@ -93,7 +98,7 @@
 
         .contact {
             margin: 2rem 0;
-            width: 1280px;
+            width: var(--width);
             list-style: none;
         }
 
@@ -125,6 +130,13 @@
 
         .donate-me>p {
             font-size: 16px;
+        }
+
+        @media screen and (max-width: 960px) {
+            :root {
+                --width: 960px;
+                --summary-width: 600px;
+            }
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
