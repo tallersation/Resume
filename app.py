@@ -4,7 +4,7 @@ app.debug = True
 
 @app.route('/')
 def index():
-    return render_template('index.html', status=session['status'])
+    return render_template('index.html')
 
 @app.route('/status', methods=['POST'])
 def status_post():
