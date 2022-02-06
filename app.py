@@ -16,4 +16,4 @@ def status_post():
     return jsonify(status)
 
 if __name__ == '__main__':
-    app.run(host='192.168.10.6')
+    app.run()
