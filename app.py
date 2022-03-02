@@ -3,6 +3,7 @@
 
 
 from re import U
+from sqlalchemy.orm import query
 from flask import Flask, render_template, url_for, redirect, jsonify, json, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, current_user, login_user, logout_user
@@ -15,7 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 #Config
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////test.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.debug = True
@@ -31,7 +32,7 @@ class Account(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False)
-    password_hash = db.Column(db.String(100), nullable=False)
+    password_hash = db.Column(db.String(100), nullable=False, unique=True)
 
     def __init__(self, name, username, password):
         self.name = name
@@ -62,7 +63,7 @@ class Forms(FlaskForm):
 class Login(FlaskForm):
     username = StringField(label="Username", validators=[DataRequired()])
     password = StringField(label="Password", validators=[DataRequired()])
-    submit = StringField(label="Login")
+    submit = SubmitField(label="Login")
 
 
 #Route
@@ -79,7 +80,7 @@ def handle_needs_login():
 def index():
     return render_template('index.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = Login()
     return render_template('login.html', form=form)
@@ -91,16 +92,18 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
     
-@app.route('/login-query', methods=["POST"])
+@app.route('/login-query', methods=['GET', 'POST'])
 def query():
     username = request.form.get('username')
     password = request.form.get('password')
+    remember = True
     user_log = Account.query.filter_by(username=username).first()
-    if not user_log and not check_password_hash(user_log.password, password):
+
+    if not user_log and not check_password_hash(user_log.password_hash, password):
         flash("แยงผ่อ เมล กับ รหัส ใหม่เด้อ")
         return redirect(url_for('login'))
 
-    login_user(user_log, remember=True)
+    login_user(user_log, remember=remember)
     return redirect(url_for('account'))
         
 @app.route('/account')
@@ -112,6 +115,7 @@ def account():
 @app.route('/json_reg', methods=['POST'])
 def json_rev():
     postJson = request.get_json()
+    name = postJson['name']
     username = postJson['username']
     password = postJson['pwd']
     user_reg = Account.query.filter_by(username=username).first()
@@ -121,8 +125,9 @@ def json_rev():
             'Error' : "เช็คไอดีแหมรอบเด้อ..."
         })
     user_to_create = Account(
+        name = name,
         username = username,
-        password = generate_password_hash(password)
+        password = generate_password_hash(password, method='sha256')
     )
     db.session.add(user_to_create)
     db.session.commit()
