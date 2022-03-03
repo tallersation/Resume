@@ -2,7 +2,6 @@
 #1st Edited : 1 Mar 2022 (Midnight)
 
 
-from re import U
 from sqlalchemy.orm import query
 from flask import Flask, render_template, url_for, redirect, jsonify, json, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -18,7 +17,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 app.config['SECRET_KEY'] = "secret"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.debug = True
 
 db = SQLAlchemy(app)
@@ -28,8 +27,8 @@ login_manager.init_app(app)
 
 
 #Database
-class Account(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+class Accounts(db.Model, UserMixin):
+    id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     username = db.Column(db.String(100), nullable=False)
     password_hash = db.Column(db.String(100), nullable=False, unique=True)
@@ -39,13 +38,15 @@ class Account(db.Model, UserMixin):
         self.username = username
         self.password_hash = password
 
+    def verify(self, password):
+        return check_password_hash(self.password_hash, password)
+
 class List(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer(), primary_key=True)
     paid_status = db.Column(db.String(50), nullable=False, unique=False)
     date = db.Column(db.Date(), nullable=False, unique=False)
-    total = db.Column(db.Integer, nullable=False, unique=False)
+    total = db.Column(db.Integer(), nullable=False, unique=False)
     reason = db.Column(db.String(100), nullable=True, unique=False)
-
 
     def __init__(self, status, date, total, reason):
         self.paid_status = status
@@ -69,7 +70,7 @@ class Login(FlaskForm):
 #Route
 @login_manager.user_loader
 def load_user(id):
-    return Account.query.get(int(id))
+    return Accounts.query.get(int(id))
 
 @login_manager.unauthorized_handler
 def handle_needs_login():
@@ -97,10 +98,9 @@ def query():
     username = request.form.get('username')
     password = request.form.get('password')
     remember = True
-    user_log = Account.query.filter_by(username=username).first()
-
-    if not user_log and not check_password_hash(user_log.password_hash, password):
-        flash("แยงผ่อ เมล กับ รหัส ใหม่เด้อ")
+    user_log = Accounts.query.filter_by(username=username).first()
+    if not user_log:
+        flash("Check username/password again..")
         return redirect(url_for('login'))
 
     login_user(user_log, remember=remember)
@@ -118,13 +118,13 @@ def json_rev():
     name = postJson['name']
     username = postJson['username']
     password = postJson['pwd']
-    user_reg = Account.query.filter_by(username=username).first()
+    user_reg = Accounts.query.filter_by(username=username).first()
     if user_reg:
         return jsonify({
             'Success' : False,
             'Error' : "เช็คไอดีแหมรอบเด้อ..."
         })
-    user_to_create = Account(
+    user_to_create = Accounts(
         name = name,
         username = username,
         password = generate_password_hash(password, method='sha256')
