@@ -57,6 +57,10 @@
             flex: 1;
         }
 
+        .cert {
+            width: var(--width);
+        }
+
         .about-me ul {
             list-style: none;
         }
@@ -95,7 +99,8 @@
             border-radius: 5px;
             padding: 10px 10px;
         }
-        .progress-bar{
+
+        .progress-bar {
             margin: 0;
         }
 
@@ -119,7 +124,7 @@
             transition: 0.4s;
             position: fixed;
             top: 0;
-            
+
         }
 
         .content {
@@ -269,7 +274,11 @@
             from High school. And I hope my skill will create a new innovation and technology.
         </p>
     </div>
+    <div class="cert">
+        <h2>Certifications</h2>
+    </div>
     <div class="clearfix"></div>
+
     <div class="skills" id='skills'>
         <h2>Skills</h2> <br>
         <div class="bar">
@@ -326,18 +335,21 @@
                     <li class="float-start">
                         <i class="bi bi-phone"> <a href="tel:093-158-9770"> (+66)-93-1589770</a></i><br>
                         <i class="bi bi-envelope"> <a
-                                href="mailto:tallersation.ts@gmail.com">tallersation.ts@gmail.com</a></i>
+                                href="mailto:tallersation.ts@gmail.com">tallersation.ts@gmail.com</a></i><br>
                     </li>
                     <li class="float-end" style='padding-right: 2rem;'>
                         <p>Developed By Thiarasak Khamyan</p>
-                        <!-- {% if status == "online" %}
-                        <span class='dot'></span>
-                        {% endif %} -->
+                        <div class="social">
+                            Social Networks:
+                            <a href="https://www.linkedin.com/in/thiarasak-khamyan-73ba27229/" target="_blank"><i
+                                    class="bi bi-linkedin"></i></a>
+                            <a href="https://twitter.com/oOUnNameOo" target="_blank"><i class="bi bi-twitter"></i></a>
+                        </div>
                     </li>
                 </ul>
             </div>
             <div class="clearfix"></div>
-            <div class="donate-me">
+            <!-- <div class="donate-me">
                 <ul>
                     <p style='margin-top: 2rem;'>Donate Me</p>
                     <li>
@@ -353,7 +365,7 @@
                             data-font-color="#000000" data-coffee-color="#FFDD00"></script>
                     </li>
                 </ul>
-            </div>
+            </div> -->
 
 </body>
 
