@@ -2,7 +2,6 @@
 #1st Edited : 1 Mar 2022 (Midnight)
 
 
-from sqlalchemy.orm import query
 from flask import Flask, render_template, url_for, redirect, jsonify, json, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_required, current_user, login_user, logout_user
